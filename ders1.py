@@ -1,0 +1,5 @@
+print('Hosgeldiniz. Adiniz?')
+isim = input()
+print('Memnun oldum ' + isim + '. Dogum yilin?')
+dogum_yili = int(input())
+print(f"Merhaba {isim}. 2026'da {2026-dogum_yili} yasinda olacaksin.")
