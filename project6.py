@@ -5,13 +5,15 @@ class Hesap:
 
     def yatir(self, miktar):
         self.bakiye += miktar
-        print(f'Para yatirma islemi gerceklestirildi.\nGuncel Bakiye: {self.bakiye}\n')
+        print(f'Para yatirma islemi gerceklestirildi.')
+        self.bakiye_goster()
     def cek(self, miktar):
         if miktar > self.bakiye:
             print('Yetersiz Bakiye!\n')
         else:
             self.bakiye -= miktar
-            print(f'Para cekme islemi gerceklestirildi.\nGuncel Bakiye: {self.bakiye}\n')
+            print(f'Para cekme islemi gerceklestirildi.')
+            self.bakiye_goster()
 
     def bakiye_goster(self):
         print(f"Guncel Bakiye: {self.bakiye}\n")
