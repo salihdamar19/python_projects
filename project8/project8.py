@@ -23,34 +23,38 @@ def baslik_al():
     except ValueError:
         print('Lutfen basligi metin turunde giriniz!')
     else:
-        print('Baslik basariyla tanimlandi.')
         return baslik
-    finally:
-        print('Islem sonlandirildi.')
 
 def dosya_yaz(baslik):
-    with open('gorevler.txt', 'a+') as f:
+    with open("gorevler.txt", 'a+') as f:
         f.write(f"[ ]|{baslik}\n")
         print('Baslik basariyla eklendi.')
 
 #.split kullanilacak
 def dosya_gorev_tamamla(gorev):
     dosya_icerigi = []
-    with open('gorevler.txt', 'r') as f:
+    with open("gorevler.txt", 'r') as f:
+        gorev_flag = False
         for satir in f:
             eleman = satir.strip().split('|')
             if eleman[1] == gorev:
+                gorev_flag = True
                 eleman[0] = "[X]"
                 dosya_icerigi.append(f"{eleman[0]}|{eleman[1]}\n")
+                print('Aferin. Gorev tamamlandi.')
             else:
-                dosya_icerigi.append(satir.strip())
-    with open('gorevler.txt', 'w') as f:
+                dosya_icerigi.append(satir)
+    with open("gorevler.txt", 'w') as f:
         for satir in dosya_icerigi:
-            f.write(satir.strip())
+            f.write(satir)
+        
+    if gorev_flag == False:
+        print('Lutfen gorev adini dogru sekilde giriniz!')
+        dosya_gorev_tamamla(baslik_al())
 
 
 def dosya_oku():
-    with open('gorevler.txt', 'r') as f:
+    with open("gorevler.txt", 'r') as f:
         print('[ ]/[X]: Gorev Durumu\n************************')
         for satir in f:
             print(f"{satir.strip().split('|')[0]} {satir.strip().split('|')[1]}")
