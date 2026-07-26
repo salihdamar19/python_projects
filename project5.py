@@ -9,7 +9,7 @@ except ZeroDivisionError:
     print('Sifira bolunme islemi yapilamadi!')
     
 #bunlarin yerine 
-#   exceppt (ValueError, ZeroDivisionError) as e:
+#   except (ValueError, ZeroDivisionError) as e:
 #       print(f"bir hata olustu: {e}")
 # kullanailabilir            
 
