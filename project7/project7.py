@@ -1,3 +1,4 @@
+#Author: Salih Damar
 #Olusturulacak text dosyasini projenin bulundugu klasorde olusturulmasi icin projenin tam konumunu aliyoruz
 
 import os
