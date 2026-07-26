@@ -10,6 +10,7 @@ class Hesap:
         if miktar > self.bakiye:
             print('Yetersiz Bakiye!\n')
         else:
+            self.bakiye -= miktar
             print(f'Para cekme islemi gerceklestirildi.\nGuncel Bakiye: {self.bakiye}\n')
 
     def bakiye_goster(self):
