@@ -50,6 +50,8 @@ elemanlar = driver.find_elements(By.CSS_SELECTOR, "[class*='no-underline']")
 
 #print(f"Bulunan eleman sayisi: {len(elemanlar)}")
 
+print("© 2026 Salih Damar\nKatılım Bot v1.0")
+
 user_input = kullanici_giris()
 while  user_input != 'cikis':
     search(user_input)
