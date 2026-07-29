@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ana Sayfa</title>
+</head>
+<body style="color: white; background-color: black;">
+    <h1>Merhaba {{kullanici_adi}}!</h1>
+    <p>Yasin : {{kullanici_yas}}</p>
+    <h2>Aldigim Dersler:</h2>
+    <ul>
+    {% for ders in ders_listesi %}
+        <li>{{ ders }}</li>
+    {% endfor %}
+    </ul>
+    <h2>Bana ismini soyle</h2>
+    <form action="/merhaba" method="POST">
+        <input required type="text" name="kullanici_isim" placeholder="Adiniz">
+        <button type="submit">Gonder</button>
+    </form>
+</body>
+</html>
