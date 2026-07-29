@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gorev Takip</title>
+</head>
+<body>
+    <table border="1">
+  <tr>
+    <th>Ad Soyad</th>
+    {% for ay in aylar %}
+      <th>{{ ay }}</th>
+    {% endfor %}
+  </tr>
+
+  {% for index, satir in df.iterrows() %}
+  <tr>
+    <td>{{ satir["Ad Soyad"] }}</td>
+    {% for ay in aylar %}
+      <td style="background-color: {{ 'lightgreen' if satir[ay] == 'Okundu' else 'white' }};">
+        <form method="POST" action="/degistir" onsubmit="return confirm('{{ satir['Ad Soyad'] }} - {{ ay }} görevini değiştirmek istiyor musun?');">
+          <input type="hidden" name="isim" value="{{ satir['Ad Soyad'] }}">
+          <input type="hidden" name="ay" value="{{ ay }}">
+          <button type="submit" style="width:100%; height:100%; border:none; background:none; cursor:pointer;">
+            {{ satir[ay] }}
+          </button>
+        </form>
+      </td>
+    {% endfor %}
+  </tr>
+  {% endfor %}
+    </table>
+</body>
+</html>
