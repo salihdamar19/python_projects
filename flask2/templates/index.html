@@ -6,10 +6,13 @@
     <title>Flask</title>
 </head>
 <body>
-    <div style="width: 200px; height: 200px; background-color: {{
-        'lightgreen' if durum == 'Yapildi' else 'white'}}; border:1px solid black;">
-        <p>Durum {{ durum }}</p>
-        <a href="/degistir">Tikla</a>
-    </div>
+    {% for index, gorev in df.iterrows() %}
+        <div style="width: 200px; height: 200px; background-color: {{
+        'lightgreen' if gorev['Durum'] == 'Yapildi' else 'white'}}; border:1px solid black;">
+            <p>Gorev {{gorev["Gorev"] }}</p><br>
+            <p>Durum {{ gorev["Durum"] }}</p>
+            <a href="/degistir/{{gorev['Gorev']}}">Tikla</a>
+        </div>
+    {% endfor %}
 </body>
 </html>

@@ -5,8 +5,8 @@ klasor = os.path.dirname(os.path.abspath(__file__))
 dosya = os.path.join(klasor, "durum.xlsx")
 
 veri = {
-    "Gorev" : ["Temizlik"],
-    "Durum" : ["Yapilmadi"]
+    "Gorev" : ["Temizlik", "Bulasik", "Cop"],
+    "Durum" : ["Yapilmadi", "Yapilmadi", "Yapilmadi"]
 }
 
 df = pd.DataFrame(veri)
