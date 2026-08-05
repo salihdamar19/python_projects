@@ -5,12 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dogrulama Sistemi</title>
 </head>
-<body>
+<body style="display: flex; flex-direction: column; justify-content: center; align-items: center; height: 100vh; margin: 0; ">
     <h1>Mail Adresini Gir</h1>
     <form method="POST" action="/uret">
-        <input type="email" name="email">
-        <button type="submit">Kod Gonder</button>
+        <input style="width: 100%;" type="email" name="email"><br>
+        <button style="margin: 5px 5px 0 5px; width: 100%; color: #d1c021; background-color: #0e2e78; border-radius: 8px;" type="submit">Kod Gonder</button>
     </form>
-    <p>{{message}}</p>
 </body>
 </html>
