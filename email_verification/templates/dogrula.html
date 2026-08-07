@@ -4,20 +4,74 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dogrula</title>
+<style>
+    * {
+        box-sizing: border-box;
+    }
+
+    body {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+        font-family: Arial, sans-serif;
+        background-color: #f2f2f2;
+        padding: 20px;
+    }
+
+    h1 {
+        font-size: clamp(18px, 3vw, 24px);
+        text-align: center;
+        margin-bottom: 10px;
+    }
+
+    p {
+        font-size: clamp(14px, 2.5vw, 16px);
+        text-align: center;
+    }
+
+    input, button {
+        width: 100%;
+        max-width: 250px;
+        padding: 10px;
+        border-radius: 8px;
+        font-size: 14px;
+        box-sizing: border-box;
+    }
+
+    input {
+        border: 1px solid #ccc;
+    }
+
+    button {
+        margin: 6px 0;
+        background-color: #0e2e78;
+        color: #d1c021;
+        border: none;
+        cursor: pointer;
+        font-weight: bold;
+    }
+
+    button:hover {
+        background-color: #163a94;
+    }
+</style>
 </head>
-<body style="display: flex; flex-direction: column; justify-content: center; align-items: center; height: 100vh; margin: 0;">
+<body>
     {% if message == "Kod Dogru" %}
     <meta http-equiv="refresh" content="2;url={{ url_for('anasayfa') }}">
     {% endif %}
     <h1>Dogrulama kodunu gir</h1>
     <h2>{{message}}</h2>
     <form method="POST" action="/dogrula">
-        <input style="margin: 5px 20px 0 20px; width: 200px; border: grey solid;" type="text" name="kod" placeholder="6 haneli kodu gir" required><br>
-        <button style="margin: 10px 20px 0 20px; width: 200px; color: #d1c021; background-color: #0e2e78; border-radius: 8px;" type="submit">Dogrula</button>
+        <input type="text" name="kod" placeholder="6 haneli kodu gir" required><br>
+        <button type="submit">Dogrula</button>
     </form>
     <form action="/uret" method="POST">
         <input type="hidden" name="email" value="{{session['email']}}">
-        <button style="margin: 10px 20px 0 20px; width: 200px; color: #d1c021; background-color: #0e2e78; border-radius: 8px;" type="submit">Yeni Kod Gonder</button>
+        <button type="submit">Yeni Kod Gonder</button>
     </form>
 </body>
 </html>
