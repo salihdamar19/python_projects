@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hava Durumu</title>
+    <style>
+        body{
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f2f2f2;
+            padding: 20px;
+        }
+    </style>
+</head>
+<body>
+    <form class="hide" method="POST" action="/ara">
+        <input type="text" name="sehir" id="sehir">
+        <button type="submit">Ara</button>
+    </form>
+    {% if sehir_adi %}
+    <img style="width: 100px; height: 100px;" src="{{ image }}" alt=""><br>
+    <div>
+        Sehir adi: {{ sehir_adi }}<br>
+        Sicaklik: {{ sicaklik }}<br>
+        Hava Durumu: {{ hava_durumu }}
+    </div>
+    {% endif %}
+
+    <script>
+        const form = document.getElementsByClassName("hide")[0]
+        if ("{{sehir_adi}}"){
+            form.style.display = "none";
+        }
+    </script>
+</body>
+</html>
