@@ -65,11 +65,13 @@ def anasayfa():
 @app.route("/ara", methods=["POST", "GET"])
 def ara():
     sehir = request.form["sehir"]
-    print(sehir)
     url = f"https://api.openweathermap.org/data/2.5/weather?q={sehir}&appid={api_key}&units=metric"
 
     response = requests.get(url)
     veri = response.json()
+
+    if veri.get("cod") != 200:
+        return render_template("index.html", error="Lutfen gecerli bir sehir adi giriniz!")
 
     ikon_kodu = veri["weather"][0]["icon"]
     meteocons_adi = ikon_eslesme.get(ikon_kodu, "not-available")

@@ -16,11 +16,11 @@
             background-color: #f2f2f2;
             padding: 20px;
         }
-        input,button, .hava_durumu{
+        input,button, .hava_durumu,.error{
             display: block;
             width: 250px;
             padding: 10px;
-            margin: 6px 0;
+            margin: 3px 0;
             border-radius: 8px;
             font-size: 14px;
             font-family: inherit;
@@ -44,13 +44,16 @@
     </style>
 </head>
 <body>
+    {%if error %}
+    <div clas="error">{{error}}</div>
+    {% endif %}
     <form class="hide" method="POST" action="/ara">
         <input required type="text" name="sehir" id="sehir">
         <br>
         <button type="submit">Ara</button>
     </form>
     {% if sehir_adi %}
-    <img style="width: 200px; height: 200px;" src="{{ image }}" alt=""><br>
+    <img style="width: 250px; height: 250px;" src="{{ image }}" alt=""><br>
     <div class="hava_durumu">
         Sehir adi: {{ sehir_adi }}<br>
         Sicaklik: {{ sicaklik }}°C<br>
