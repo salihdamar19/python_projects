@@ -4,13 +4,16 @@ from dotenv import load_dotenv
 import random
 import resend
 import time
+import requests
 
+
+load_dotenv()
 app = Flask(__name__)
 app.secret_key = os.getenv("SECRET_KEY")
-load_dotenv()
+
 
 resend.api_key = os.getenv("RESEND_API_KEY")
-
+brevo_key = os.getenv("BREVO_API_KEY")
 
 
 @app.route("/")
@@ -27,14 +30,25 @@ def uret():
     session["kod"] = kod
     alici = request.form["email"]
     session["email"] = alici
-    params = {
-        "from" : "onboarding@resend.dev",
-        "to": [alici],
-        "subject" : "Dogrulama Kodu",
-        "text": str(kod)
+    url = "https://api.brevo.com/v3/smtp/email"
+    headers = {
+        "accept": "application/json",
+        "api-key": brevo_key,
+        "content-type": "application/json"
+    }
+    veri = {
+        "sender": {"name": "Dogrulama Sistemi", "email": "salihdamar612@gmail.com"},
+        "to": [{"email":alici}],
+        "subject": "Dogrulama Kodunuz",
+        "textContent": f"Dogrulama Kodunuz<br>{kod}"
     }
     try:
-        resend.Emails.send(params)
+        response = requests.post(url, headers=headers, json=veri)
+        print("STATUS:", response.status_code)
+        print("RESPONSE:", response.text)
+        print("TUM FORM VERISI:", request.form)
+        alici = request.form["email"]
+        print("ALICI:", alici)
     except Exception as e:
         return f"Mail gonderilemedi: {e}"
         
@@ -59,7 +73,6 @@ def dogrula():
                 session.pop("expire", None)
                 session.pop("next_send", None)
                 return render_template("dogrula.html", message="Kod Dogru")
-            
             elif request.form["kod"]: 
                 return render_template("dogrula.html", message="Kod Yanlis")
             else:

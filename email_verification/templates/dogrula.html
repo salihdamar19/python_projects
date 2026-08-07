@@ -6,6 +6,9 @@
     <title>Dogrula</title>
 </head>
 <body style="display: flex; flex-direction: column; justify-content: center; align-items: center; height: 100vh; margin: 0;">
+    {% if message == "Kod Dogru" %}
+    <meta http-equiv="refresh" content="2;url={{ url_for('anasayfa') }}">
+    {% endif %}
     <h1>Dogrulama kodunu gir</h1>
     <h2>{{message}}</h2>
     <form method="POST" action="/dogrula">
