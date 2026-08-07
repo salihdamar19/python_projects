@@ -16,7 +16,7 @@
             background-color: #f2f2f2;
             padding: 20px;
         }
-        input,button{
+        input,button, .hava_durumu{
             display: block;
             width: 250px;
             padding: 10px;
@@ -48,7 +48,7 @@
     </form>
     {% if sehir_adi %}
     <img style="width: 200px; height: 200px;" src="{{ image }}" alt=""><br>
-    <div>
+    <div class="hava_durumu">
         Sehir adi: {{ sehir_adi }}<br>
         Sicaklik: {{ sicaklik }}<br>
         Hava Durumu: {{ hava_durumu }}
