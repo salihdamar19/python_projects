@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dogrula</title>
+    
 <style>
     * {
         box-sizing: border-box;
@@ -67,7 +68,7 @@
     <meta http-equiv="refresh" content="2;url={{ url_for('anasayfa') }}">
     {% endif %}
     <h1>Dogrulama kodunu gir</h1>
-    <h2>{{message}}</h2>
+    <h5 id="bekleme-mesaji"></h5>
     <form method="POST" action="/dogrula">
         <input type="text" name="kod" placeholder="6 haneli kodu gir" required><br>
         <button type="submit">Dogrula</button>
@@ -76,5 +77,25 @@
         <input type="hidden" name="email" value="{{session['email']}}">
         <button type="submit">Yeni Kod Gonder</button>
     </form>
+    <script>
+        let kalanSure = {{ kalan_sure if kalan_sure else 0 }};
+
+        function geriSayim() {
+            const mesajElemani = document.getElementById("bekleme-mesaji");
+            
+            if(kalanSure > 0) {
+                mesajElemani.textContent = `Lutfen yeni kod icin ${kalanSure}sn bekleyiniz.`;
+                kalanSure = kalanSure - 1;
+                setTimeout(geriSayim,1000);
+            }else{
+                mesajElemani.textContent = `Simdi yeni kod isteyebilirsiniz.`;
+            }
+
+        }
+
+        if (kalanSure > 0){
+            geriSayim();
+        }
+    </script>
 </body>
 </html>

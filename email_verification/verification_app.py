@@ -23,7 +23,8 @@ def anasayfa():
 @app.route("/uret", methods=["POST", "GET"])
 def uret():
     if session.get("next_send") and session["next_send"] > time.time() :
-        return render_template("dogrula.html", message=f"Lufen yeni kod icin {int(session.get("expire") - 240 - time.time())}sn bekleyiniz.")
+        kalan = int(session.get("next_send") - time.time())
+        return render_template("dogrula.html", kalan_sure=kalan)
     kod = random.randint(100000,999999)
     session["expire"] = time.time() + 300
     session["next_send"] = time.time() + 60
