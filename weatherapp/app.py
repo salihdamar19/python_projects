@@ -51,6 +51,16 @@ hava_durumu_tr = {
     "squalls": "Bora"
 }
 
+def render(veri):
+    ikon_kodu = veri["weather"][0]["icon"]
+    meteocons_adi = ikon_eslesme.get(ikon_kodu, "not-available")
+    image_address = f"https://cdn.meteocons.com/3.0.0-next.10/svg/fill/{meteocons_adi}.svg"
+
+    aciklama_en = veri["weather"][0]["description"]
+    turkcesi = hava_durumu_tr.get(aciklama_en, aciklama_en)
+
+    return render_template("index.html",sehir_adi=veri["name"], sicaklik=veri["main"]["temp"],hava_durumu=turkcesi, image=image_address)
+
 folder = os.path.dirname(os.path.abspath(__file__))
 image_folder = os.path.join(folder, "/images")
 
@@ -72,7 +82,8 @@ def ara():
 
     if veri.get("cod") != 200:
         return render_template("index.html", error="Lutfen gecerli bir sehir adi giriniz!")
-
+    return render(veri)
+'''
     ikon_kodu = veri["weather"][0]["icon"]
     meteocons_adi = ikon_eslesme.get(ikon_kodu, "not-available")
     image_address = f"https://cdn.meteocons.com/3.0.0-next.10/svg/fill/{meteocons_adi}.svg"
@@ -81,8 +92,36 @@ def ara():
     turkcesi = hava_durumu_tr.get(aciklama_en, aciklama_en)
 
     return render_template("index.html",sehir_adi=veri["name"], sicaklik=veri["main"]["temp"],hava_durumu=turkcesi, image=image_address)
+'''
 
+@app.route("/konum")
+def konum():
+    lat = request.args.get("lat")
+    lon = request.args.get("lon")
+
+    print("LAT: ", lat)
+    print("LON: " , lon)
+
+    url = f"https://api.openweathermap.org/data/2.5/weather?lat={lat}&lon={lon}&appid={api_key}&units=metric"
+    response = requests.get(url)
+    veri = response.json()
+
+    print("VERI: ", veri)
+
+    if veri.get("cod") != 200:
+        return render_template("index.html", error="Lutfen gecerli bir sehir adi giriniz!")
+    return render(veri)
+'''
+    ikon_kodu = veri["weather"][0]["icon"]
+    meteocons_adi = ikon_eslesme.get(ikon_kodu, "not-available")
+    image_address = f"https://cdn.meteocons.com/3.0.0-next.10/svg/fill/{meteocons_adi}.svg"
+
+    aciklama_en = veri["weather"][0]["description"]
+    turkcesi = hava_durumu_tr.get(aciklama_en, aciklama_en)
+
+    return render_template("index.html",sehir_adi=veri["name"], sicaklik=veri["main"]["temp"],hava_durumu=turkcesi, image=image_address)
+'''
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(debug=False)
 
 #https://cdn.meteocons.com/3.0.0-next.10/svg/fill/clear-day.svg

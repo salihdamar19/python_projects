@@ -55,13 +55,25 @@
     {% if sehir_adi %}
     <img style="width: 250px; height: 250px;" src="{{ image }}" alt=""><br>
     <div class="hava_durumu">
-        Sehir adi: {{ sehir_adi }}<br>
+        Konum: {{ sehir_adi }}<br>
         Sicaklik: {{ sicaklik }}°C<br>
         Hava Durumu: {{ hava_durumu }}
     </div>
     {% endif %}
 
     <script>
+        {% if not sehir_adi %}
+        navigator.geolocation.getCurrentPosition(
+            function(pozition){
+                const lat = pozition.coords.latitude;
+                const lon = pozition.coords.longitude;
+                window.location.href = `/konum?lat=${lat}&lon=${lon}`;
+            },
+            function(error){
+                console.log("Konum alinamadi", error.message)
+            }
+        );
+        {% endif %}
         const form = document.getElementsByClassName("hide")[0]
         if ("{{sehir_adi}}"){
             form.style.display = "none";
