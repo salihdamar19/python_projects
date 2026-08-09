@@ -241,7 +241,21 @@
             addButton.style.display = "block";
         });
 
-        form.actio
+                // Sayfa yuklenmeden once, kaydedilmis scroll pozisyonu varsa oraya git
+        window.addEventListener("load", function() {
+            const kayitliPozisyon = sessionStorage.getItem("scrollPos");
+            if (kayitliPozisyon) {
+                window.scrollTo(0, kayitliPozisyon);
+                sessionStorage.removeItem("scrollPos");
+            }
+        });
+
+        // Her toggle formu gonderilmeden once, mevcut pozisyonu kaydet
+        document.querySelectorAll("form").forEach(function(form) {
+            form.addEventListener("submit", function() {
+                sessionStorage.setItem("scrollPos", window.scrollY);
+            });
+        });
     </script>
     <footer>© 2026 Salih Damar</footer>
 </body>
