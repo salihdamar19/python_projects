@@ -23,6 +23,8 @@ def selectAll():
 
 @app.route("/")
 def index():
+    session["message"] = "Gorev durumunu degistirmek icin uzerine tiklayin."
+    session["color"] = "#3f81bf"
     connection = sqlite3.connect(os.path.join(project, "tasks.db"))
     cursor = connection.cursor()
 
