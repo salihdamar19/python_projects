@@ -245,7 +245,10 @@
         window.addEventListener("load", function() {
             const kayitliPozisyon = sessionStorage.getItem("scrollPos");
             if (kayitliPozisyon) {
-                window.scrollTo(0, kayitliPozisyon);
+                window.scrollTo({
+                    top: kayitliPozisyon,
+                    behavior: "smooth"
+                });
                 sessionStorage.removeItem("scrollPos");
             }
         });
