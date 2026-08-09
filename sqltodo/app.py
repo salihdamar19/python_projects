@@ -1,11 +1,25 @@
 import sqlite3
 import os
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, redirect, url_for, session
 
 project = os.path.dirname(os.path.abspath(__file__))
 
 app = Flask(__name__)
+app.secret_key = "gizi_sifre"
 
+def toggle(flag):
+    if flag == 1:
+        return 0
+    else:
+        return 1
+
+def selectAll():
+    connection = sqlite3.connect(os.path.join(project, "tasks.db"))
+    cursor = connection.cursor()
+    cursor.execute("SELECT * FROM tasks")
+    response = cursor.fetchall()
+    session["len"] = len(response)
+    return response
 
 @app.route("/")
 def index():
@@ -14,7 +28,10 @@ def index():
 
     cursor.execute("SELECT * FROM tasks")
     response = cursor.fetchall()
-    return render_template("index.html", gorevler=response)
+
+    message = session.pop("message", None)
+    color = session.pop("color", None)
+    return render_template("index.html", gorevler=response, message=message, renk=color)
 
 @app.route("/add", methods=["POST"])
 def add():
@@ -23,15 +40,50 @@ def add():
     connection = sqlite3.connect(os.path.join(project, "tasks.db"))
     cursor = connection.cursor()
     if not task:
-        cursor.execute("SELECT * FROM tasks")
-        response = cursor.fetchall()
-        return render_template("index.html", message="Gorev basligi bos birakilamaz.", gorevler=response)
+        session["message"] = "Gorev basligi bos birakilamaz!"
+        session["color"] = "#d14141"
+        return redirect(url_for("index"))
 
     cursor.execute("INSERT INTO tasks (title) VAlUES (?)", task_tuple)
     connection.commit()
-    cursor.execute("SELECT * FROM tasks")
-    response = cursor.fetchall()
-    return render_template("index.html", message="Gorev basariyla eklendi.", gorevler=response)
+
+    session["message"] = "Gorev basariyla eklendi."
+    session["color"] = "#3f81bf"
+    return redirect(url_for("index"))
+
+@app.route("/toggle", methods= ["POST"])
+def comlete():
+    task_id = int(request.form["id"])
+    progress = int(request.form["progress"])
+    progress = toggle(progress)
+    connection = sqlite3.connect(os.path.join(project, "tasks.db"))
+    cursor = connection.cursor()
+    cursor.execute("UPDATE tasks SET progress = ? WHERE id = ?", (progress, task_id))
+    connection.commit()
+    session["message"] = "Gorev ilerlemesi guncellendi."
+    session["color"] = "#C0ECC0"
+    return redirect(url_for("index"))
+
+@app.route("/del", methods=["POST"])
+def delete():
+    task_id = int(request.form["task"])
+    selectAll()
+
+
+    if task_id > session.get("len"):
+        session["message"] = "Gecersiz ID!"
+        session["color"] = "#d14141"
+        return redirect(url_for("index"))
+
+    connection = sqlite3.connect(os.path.join(project, "tasks.db"))
+    cursor = connection.cursor()
+
+    cursor.execute("DELETE FROM tasks WHERE id = ?", (task_id,))
+    connection.commit()
+
+    session["message"] = "Gorev basarilya silindi."
+    session["color"] = "#d14141"
+    return redirect(url_for("index"))
 
 if __name__ == "__main__":
     app.run(debug=True, host="0.0.0.0")

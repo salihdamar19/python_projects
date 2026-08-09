@@ -6,7 +6,7 @@
     <title>To do App</title>
     <style>
         body{
-            margin: 0 0 100px 0;
+            margin: 0 0 5vh 0;
             display: flex;
             flex-direction: column;
             justify-content: center;
@@ -34,7 +34,7 @@
         }
         button{
             margin: 10px 0 10px 0;
-            background: rgb(44, 188, 99);
+            background: #2cbc63;
             border-radius: 999px;
             box-sizing: border-box;
             color: #FFFFFF;
@@ -52,8 +52,11 @@
             word-break: break-word;
             border: 0;
         }
-        #add{
+        #add, #del{
             width: 40vh;
+        }
+        #del{
+            background-color:#d14141;
         }
         #submit{
             width: 100%;
@@ -74,6 +77,15 @@
             font-weight: bold;
             border: 1px solid #ccc;
         }
+        input[type="number"]::-webkit-outer-spin-button,
+        input[type="number"]::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        input[type="number"] {
+            -moz-appearance: textfield;
+        }
         p{
             position: fixed;
             display: flex;
@@ -82,7 +94,7 @@
             align-items: center;
             top: 20px;
             left: 50%;
-            background-color: #D8E8D5;
+
             color: 3E6842;
             width: 200px;
             height: 50px;
@@ -99,11 +111,12 @@
     </style>
 </head>
 <body>
-    <p id="hide_message">{{message}}</p>
+    <p id="hide_message" style="">{{message}}</p>
     <button id="add">Add Task</button>
     <div id="hide">
-        <form action="/add" method="POST">
-            <input type="text" id="task" name="task">
+        <form id="form" action="" method="POST">
+            <p id="message"></p>
+            <input type="" id="task" name="task">
             <button id="submit" type="submit">Submit</button>
         </form>
     </div>
@@ -118,18 +131,31 @@
                 <tr>
                     <td>{{gorev[0]}}</td>
                     <td>{{gorev[1]}}</td>
-                    <td>{{ 'Yapildi' if gorev[2] else 'Yapilmadi' }}</td>
+                    <td style="background-color: {{ 'lightgreen' if gorev[2] else 'white' }};">
+                        <form method="POST" action="/toggle" onsubmit="return confirm('{{gorev[1]}} icin gorev ilerlemesini degistirmek istiyor musun?')">
+                            <input type="hidden" name="id" value="{{gorev[0]}}">
+                            <input type="hidden" name="progress" value="{{gorev[2]}}">
+                            <button type="submit" style="width:100%; height:100%; border:none; background:none; cursor:pointer; color:black; text-wrap:nowrap;">{{'Yapildi' if gorev[2] else 'Yapilmadi'}}</button>
+                        </form>
+                    </td>
                 </tr>
             {% endfor %}
         </tbody>
     </table>
+    <button id="del">Delete Task</button>
     <script>
-        const button = document.getElementById("add");
+
+        const addButton = document.getElementById("add");
+        const delButton = document.getElementById("del");
+        const input_element = document.getElementById("task");
         const div = document.getElementById("hide");
         const submit = document.getElementById("submit");
         const table = document.getElementById("table");
-        const message = document.getElementById("hide_message")
-        var buttonCount = 0;
+        const message = document.getElementById("hide_message");
+        const form = document.getElementById("form");
+        const form_message = document.getElementById("message");
+        var addButtonCount = 0;
+        var delButtonCount = 0;
         
         function showMessage(){
              requestAnimationFrame(() => {
@@ -137,7 +163,7 @@
                     position: fixed;
                     top: 20px;
                     left: 50%;
-
+                    background-color: {{renk}};
                     transform: translate(-50%, -100px);
                     opacity: 0;
 
@@ -154,7 +180,7 @@
                         position: fixed;
                         top: 20px;
                         left: 50%;
-
+                        background-color: {{renk}};
                         transform: translate(-50%, -100px);
                         opacity: 0;
 
@@ -167,26 +193,45 @@
         {% if message %}
         showMessage();
         {% endif %}
-        button.addEventListener("click", function(){
-            buttonCount++;
-            if(buttonCount % 2 == 1){
+        addButton.addEventListener("click", function(){
+            form.action = "/add";
+            input_element.type = "text"
+            addButtonCount++;
+            if(addButtonCount % 2 == 1){
+                form_message.textContent = "Lutfen eklemek istediginiz gorevin adini yaziniz:"
                 div.style.display = "flex";
                 table.style.display = "none";
-                button.style.display = "none";
+                addButton.style.display = "none";
             }else{
                 div.style.display = "none";
                 table.style.display = "block";
-                button.style.display = "block";
+                addButton.style.display = "block";
+            }
+        });
+        
+        delButton.addEventListener("click", function(){
+            form.action = "/del";
+            input_element.type = "number";
+            delButtonCount++;
+            if(delButtonCount % 2 == 1){
+                form_message.textContent = "Lutfen silmek istediginiz gorevin ID'sini giriniz:"
+                div.style.display = "flex";
+                table.style.display = "none";
+                addButton.style.display = "none";
+            }else{
+                div.style.display = "none";
+                table.style.display = "block";
+                addButton.style.display = "block";
             }
         });
 
         submit.addEventListener("click", function() {
            div.style.display = "none";
             table.style.display = "block";
-            button.style.display = "block";
+            addButton.style.display = "block";
         });
 
-
+        form.actio
     </script>
 
 </body>

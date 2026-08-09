@@ -1,1 +1,1 @@
-  ("Bilgisayarı kapat",),
+progress
