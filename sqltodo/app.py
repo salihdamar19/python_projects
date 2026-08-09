@@ -23,16 +23,23 @@ def selectAll():
 
 @app.route("/")
 def index():
-    session["message"] = "Gorev durumunu degistirmek icin uzerine tiklayin."
-    session["color"] = "#3f81bf"
+    if not session.get("cookie"):
+        message = "Durumu tiklayarak degistirin."
+        color = "#3f81bf"
+        session["cookie"] = True
+    else:
+        message = None
+        color = None
+
     connection = sqlite3.connect(os.path.join(project, "tasks.db"))
     cursor = connection.cursor()
 
     cursor.execute("SELECT * FROM tasks")
     response = cursor.fetchall()
 
-    message = session.pop("message", None)
-    color = session.pop("color", None)
+    if not message:
+        message = session.pop("message", None)
+        color = session.pop("color", None)
     return render_template("index.html", gorevler=response, message=message, renk=color)
 
 @app.route("/add", methods=["POST"])
@@ -69,10 +76,15 @@ def comlete():
 @app.route("/del", methods=["POST"])
 def delete():
     task_id = int(request.form["task"])
-    selectAll()
+    response = selectAll()
 
-
-    if task_id > session.get("len"):
+    global search_flag
+    search_flag = False
+    for task in response:
+        if task[0] == task_id:
+            search_flag = True
+    
+    if search_flag == False:
         session["message"] = "Gecersiz ID!"
         session["color"] = "#d14141"
         return redirect(url_for("index"))
