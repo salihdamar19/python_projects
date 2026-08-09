@@ -1,0 +1,1 @@
+  ("Bilgisayarı kapat",),
