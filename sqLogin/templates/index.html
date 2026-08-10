@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        body{
+            background-color: #0d0d0d;
+            font-family: Neue Montreal,sans-serif;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        input{
+            display: flex;
+            margin: 5px;
+            padding-inline: 10px;
+            background-color: #0d0d0d;
+            color: #c7c7c7;
+            border: 2px solid #c7c7c7;
+            height: 5vh;
+            font-weight: bold;
+        }
+        a{
+            color: #d1b8ff;
+        }
+        div{
+            color: #c7c7c7;
+        }
+        button{
+            border: none;
+            background-color: white;
+            color: #0d0d0d;
+            margin: 5px;
+            width: 13vh;
+            height: 7vh;
+        }
+        button:hover{
+            background-color: #8a05ff;
+            color: white;
+        }
+        p{
+            color: white;
+        }
+    </style>
+</head>
+<body>
+    {% if message %}
+        <p>{{message}}</p>
+    {% endif %}
+    <form id="form" method="POST" action="/signin">
+        <input id="hidden-input" type="hidden" placeholder="full name" name="fullName" required>
+        <input type="email" placeholder="email" name="email">
+        <input type="password" placeholder="don't tell anyone" name="password" required>
+        <button id="signbutton" type="submit">Sign in</button>
+        <div>
+        <span id="change-span">Need an account?</span>
+        <a id="change-action" href="javascript:void(0)">Sign up</a><br>
+        <span id="hide-span">Forgot your password?</span>
+        <a id="hide-link" href="/forgot">Get a code</a>
+        </div>
+    </form>
+    <script>
+        const form = document.getElementById("form");
+        const link = document.getElementById("change-action");
+        const input_element = document.getElementById("hidden-input");
+        const span = document.getElementById("change-span");
+        const signbutton = document.getElementById("signbutton");
+        const hideLink = document.getElementById("hide-link");
+        const hideSpan = document.getElementById("hide-span");
+        let linkCount = 0;
+        link.addEventListener("click",function(){
+            linkCount++;
+            if (linkCount % 2 == 1){
+                form.action = "/signup";
+                input_element.type = "text";
+                span.textContent = "Already have an account?";
+                link.textContent = "Sign in";
+                signbutton.textContent = "Sign up";
+                hideLink.style.display = "none";
+                hideSpan.style.display = "none";
+            }else{
+                form.action = "/signin";
+                input_element.type = "hidden";
+                span.textContent = "Need an account?";
+                link.textContent = "Sign up";
+                signbutton.textContent = "Sign in";
+                hideLink.style.display = "inline-block";
+                hideSpan.style.display = "inline";
+            }
+
+        });
+
+    </script>
+</body>
+</html>
