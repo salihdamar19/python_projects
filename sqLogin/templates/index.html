@@ -14,6 +14,12 @@
             align-items: center;
             height: 100vh;
         }
+        form{
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
         input{
             display: flex;
             margin: 5px;
@@ -34,9 +40,10 @@
             border: none;
             background-color: white;
             color: #0d0d0d;
-            margin: 5px;
-            width: 13vh;
-            height: 7vh;
+            margin: 7px;
+            padding: 15px 20px;
+            width: auto;
+            height: auto;
         }
         button:hover{
             background-color: #8a05ff;
@@ -44,66 +51,122 @@
             cursor: pointer;
         }
         p{
+            transition: opacity 0.5s ease-out;
+            opacity: 1;
             color: white;
+        }
+        input[type="number"]::-webkit-outer-spin-button,
+        input[type="number"]::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+
+        input[type="number"] {
+            -moz-appearance: textfield;
         }
     </style>
 </head>
 <body>
     {% if message %}
-        <p>{{message}}</p>
+        <p id="message">{{message}}</p>
     {% endif %}
-    <form id="form" method="POST" action="/signin">
+    <form id="form" method="POST" action="{{ action or '/signin' }}">
         <input id="fullName" type="hidden" placeholder="full name" name="fullName" required>
-        <input type="email" placeholder="email" name="email">
-        <input type="password" placeholder="don't tell anyone" name="password" required>
-        <input id="code" type="number" name="code">
+        <input id="email" type="email" placeholder="email" name="email" required>
+        <input id="password" type="password" placeholder="don't tell anyone" name="password" required>
+        <input id="code" type="hidden" name="code" placeholder="6-digit code">
         <button id="signbutton" type="submit">Sign in</button>
         <div>
         <span id="change-span">Need an account?</span>
-        <a id="change-action" href="javascript:void(0)">Sign up</a><br>
+        <a id="change-action" href="javascript:void(0)">Sign up</a></div>
+        <div>
         <span id="hide-span">Forgot your password?</span>
-        <a id="hide-link" href="/forgot">Get a code</a>
+        <a id="hide-link" href="javascript:void(0)">Get a code</a>
         </div>
     </form>
     <script>
         const form = document.getElementById("form");
         const link = document.getElementById("change-action");
-        const input_element = document.getElementById("fullName");
+        const fullNameInput = document.getElementById("fullName");
+        const emailInput = document.getElementById("email")
+        const passwordInput = document.getElementById("password");
+        const codeInput = document.getElementById("code");
         const span = document.getElementById("change-span");
         const signbutton = document.getElementById("signbutton");
         const hideLink = document.getElementById("hide-link");
         const hideSpan = document.getElementById("hide-span");
-        const codeInput = document.getElementById("code");
         const title_element = document.getElementById("title");
         let linkCount = 0;
-        link.addEventListener("click",function(){
+        link.addEventListener("click", function(){
             linkCount++;
-            if (linkCount % 2 == 1){
+            if(linkCount % 2 == 1){
                 form.action = "/signup";
-                input_element.type = "text";
+                fullNameInput.type = "text";
+                emailInput.type = "email";
+                passwordInput.type = "password";
+                codeInput.type = "hidden";
+                signbutton.textContent = "Sign up";
                 span.textContent = "Already have an account?";
                 link.textContent = "Sign in";
-                signbutton.textContent = "Sign up";
                 hideLink.style.display = "none";
                 hideSpan.style.display = "none";
-                title_element.textContent = "Sign up";
             }else{
                 form.action = "/signin";
-                input_element.type = "hidden";
+                fullNameInput.type = "hidden";
+                emailInput.type = "email";
+                passwordInput.type = "password";
+                codeInput.type = "hidden";
+                codeInput.type = "hidden";
+                signbutton.textContent = "Sign in";
                 span.textContent = "Need an account?";
                 link.textContent = "Sign up";
-                signbutton.textContent = "Sign in";
-                hideLink.style.display = "inline-block";
+                hideLink.style.display = "inline";
                 hideSpan.style.display = "inline";
-                title_element.textContent = "Sign in";
             }
         });
 
         hideLink.addEventListener("click", function(){
-            form.action = "/auth";
-            
+            form.action = "/send";
+            fullNameInput.type = "hidden";
+            emailInput.type = "email";
+            passwordInput.type = "hidden";
+            codeInput.type = "hidden";
+            hideLink.style.display = "none";
+            hideSpan.style.display = "none";
+            signbutton.textContent = "Send Code";
+            span.textContent = "Need an account?";
+            link.textContent = "Sign up";
         });
 
+        if (form.action.includes("/verify")){
+            fullNameInput.type = "hidden";
+            emailInput.type = "hidden";
+            passwordInput.type = "hidden";
+            codeInput.type = "number";
+            hideLink.style.display = "none";
+            hideSpan.style.display = "none";
+            signbutton.textContent = "Send Code";
+            span.textContent = "Need an account?";
+            link.textContent = "Sign up";
+        };
+        
+        /*
+            fullNameInput.type = "hidden";
+            emailInput.type = "email";
+            passwordInput.type = "hidden";
+            codeInput.type = "hidden";
+            hideLink.style.display = "none";
+            hideSpan.style.display = "none";
+            signbutton.textContent = "Send Code";
+            span.textContent = "Need an account?";
+            link.textContent = "Sign up";
+        */
+
+
+        setTimeout(function(){
+            document.getElementById("message").style.display = "none";
+        },2500);
+        
     </script>
 </body>
 </html>
