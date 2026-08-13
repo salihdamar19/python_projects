@@ -23,14 +23,14 @@
         input{
             display: flex;
             margin: 5px;
-            padding-inline: 10px;
+            padding: 20px;
             background-color: #0d0d0d;
             color: #c7c7c7;
             border: 2px solid #c7c7c7;
-            height: 5ch;
             font-weight: bold;
             font-size: medium;
-            width: 30ch;
+            width: 80%;
+            max-width: 400px;
         }
         a{
             color: #d1b8ff;
@@ -46,6 +46,8 @@
             padding: 25px 40px;
             width: auto;
             height: auto;
+            font-weight: 400;
+            font-size: clamp(14px, 3vw, 20px);   /* responsive, hatirlarsin */
         }
         button:hover{
             background-color: #8a05ff;
