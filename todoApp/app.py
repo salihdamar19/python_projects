@@ -91,9 +91,9 @@ def tasks():
 def add():
     task = request.form["task"]
     if not task:
-        return redirect("tasks.html", message="Gorev basligi bos birakilamaz", color='#d14141')
+        return redirect("tasks.html", message="Gorev basligi bos birakilamaz", color='#d86262')
     session["message"] = tools.insertTask(session.get("email"),task)
-    session["color"] = "#3f81bf"
+    session["color"] = "#6396c5"
     return redirect(url_for("tasks"))
 
 @app.route("/toggle", methods=["POST"])
@@ -110,9 +110,9 @@ def complete():
 
 @app.route("/del", methods=["POST"])
 def delete():
-    task_id = request.form["id"]
+    task_id = int(request.form["task"])
     session["message"] = tools.deleteTask(session.get("email"), task_id)
-    session["color"] = '#d14141'
+    session["color"] = "#d86262"
     return redirect(url_for("tasks"))
 
 if __name__ == "__main__":
