@@ -1,0 +1,1 @@
+session["message"] = tools.deleteTask(session.get("email"), task_id)

@@ -61,7 +61,7 @@ def add():
     return redirect(url_for("index"))
 
 @app.route("/toggle", methods= ["POST"])
-def comlete():
+def complete():
     task_id = int(request.form["id"])
     progress = int(request.form["progress"])
     progress = toggle(progress)

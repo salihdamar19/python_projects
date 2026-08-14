@@ -15,6 +15,7 @@ brevo_key = os.getenv("BREVO_API_KEY")
 
 @app.route("/", methods=["POST", "GET"])
 def index():
+    
     message = session.pop("message", None)
     return render_template("index.html", message=message)
 

@@ -66,7 +66,7 @@ def arttir():
 def dogrula():
     if request.method == "POST":
         dogru_kod = str(session.get("kod"))
-        if time.time() > session["expire"]:
+        if time.time() > session.get("expire"):
             return render_template("dogrula.html", message="Kodun Suresi Doldu")
         else:
             if request.form["kod"] == dogru_kod:
