@@ -4,162 +4,173 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gorevler</title>
-    <style>
-        body{
-            margin: 0 0 5vh 0;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-        }
-        table{
-            border-collapse: collapse;
-        }
-        table,th,td{
-            border: 1px solid rgb(32, 189, 93);
-        }
-        th,td{
-            width: 100px;
-            text-align: center;
-            vertical-align: middle;
-        }
-        div{
-            width: 40vh;
-            height: 100vh;
-            display: none;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            background-color: rgba(92, 92, 92, 0.3);
-        }
-        button{
-            margin: 10px 0 10px 0;
-            background: #2cbc63;
-            border-radius: 999px;
-            box-sizing: border-box;
-            color: #FFFFFF;
-            cursor: pointer;
-            font-family: Inter,Helvetica,"Apple Color Emoji","Segoe UI Emoji",NotoColorEmoji,"Noto Color Emoji","Segoe UI Symbol","Android Emoji",EmojiSymbols,-apple-system,system-ui,"Segoe UI",Roboto,"Helvetica Neue","Noto Sans",sans-serif;
-            font-size: 16px;
-            font-weight: 700;
-            line-height: 24px;
-            opacity: 1;
-            outline: 0 solid transparent;
-            padding: 8px 18px;
-            user-select: none;
-            -webkit-user-select: none;
-            touch-action: manipulation;
-            word-break: break-word;
-            border: 0;
-        }
-        #add, #del{
-            width: 40vh;
-        }
-        #del{
-            background-color:#d14141;
-        }
-        #submit{
-            width: 100%;
-        }
-        input{
-            display: block;
-            width: 250px;
-            padding: 10px;
-            margin: 3px 0;
-            border-radius: 8px;
-            font-size: 14px;
-            font-family: inherit;
-            box-sizing: border-box;
-            appearance: none;
-            -webkit-appearance: none;
-            border: none;
-            cursor: pointer;
-            font-weight: bold;
-            border: 1px solid #ccc;
-        }
-        input[type="number"]::-webkit-outer-spin-button,
-        input[type="number"]::-webkit-inner-spin-button {
-            -webkit-appearance: none;
-            margin: 0;
-        }
-
-        input[type="number"] {
-            -moz-appearance: textfield;
-        }
-        #hide_message{
-            position: fixed;
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            top: 20px;
-            left: 50%;
-
-            color: 3E6842;
-            width: 200px;
-            height: 50px;
-            border: none;
-            border-radius: 15px;
-
-            transform: translate(-50%, -100px);
-            opacity: 0;
-
-            transition: transform 0.5s ease, opacity 0.5s ease;
-
-            z-index: 9999;
-        }
-        #message{
-            font-family: Inter,Helvetica,"Apple Color Emoji","Segoe UI Emoji",NotoColorEmoji,"Noto Color Emoji","Segoe UI Symbol","Android Emoji",EmojiSymbols,-apple-system,system-ui,"Segoe UI",Roboto,"Helvetica Neue","Noto Sans",sans-serif;
-            font-size: 16px;
-            justify-content: center;
-            align-items: center;
-        }
-        footer {
-            text-align: center;
-            margin-top: auto;
-            padding: 20px;
-            margin-top: auto;
-            font-size: 14px;
-            color: #888;
-            border-top: 1px solid #e0e0e0;
-            font-family: Arial, sans-serif;
-        }
-        .form {
+<style> 
+        body{ 
+            margin: 0 0 5vh 0; 
+            display: flex; 
+            flex-direction: column; 
+            justify-content: center; 
+            align-items: center; 
+            background-color: #0d0d0d; 
+            font-family: Neue Montreal,sans-serif; 
+            height: 100vh; 
+            color: #e0e0e0; 
+        } 
+        table{ 
+            border-collapse: collapse; 
+        } 
+        table,th,td{ 
+            border: 1px solid rgb(32, 189, 93); 
+        } 
+        th,td{ 
+            width: 100px; 
+            height: 2em; 
+            text-align: center; 
+            vertical-align: middle; 
+            color: #e0e0e0; 
+        } 
+        #hide{ 
+            width: 40vh; 
+            height: 100vh; 
+            display: none; 
+            flex-direction: column; 
+            justify-content: center; 
+            align-items: center; 
+            background-color: rgba(92, 92, 92, 0.3); 
+        } 
+        #add, #del, #submit{ 
+            margin: 10px 0 10px 0; 
+            background: #2cbc63; 
+            border-radius: 999px; 
+            box-sizing: border-box; 
+            color: #FFFFFF; 
+            cursor: pointer; 
+            font-family: Inter,Helvetica,"Apple Color Emoji","Segoe UI Emoji",NotoColorEmoji,"Noto Color Emoji","Segoe UI Symbol","Android Emoji",EmojiSymbols,-apple-system,system-ui,"Segoe UI",Roboto,"Helvetica Neue","Noto Sans",sans-serif; 
+            font-size: 16px; 
+            font-weight: 700; 
+            line-height: 24px; 
+            opacity: 1; 
+            outline: 0 solid transparent; 
+            padding: 8px 18px; 
+            user-select: none; 
+            -webkit-user-select: none; 
+            touch-action: manipulation; 
+            word-break: break-word; 
+            border: 0; 
+            width: 40vh; 
+        } 
+        #del{ 
+            background-color:#d14141; 
+        } 
+        #submit{ 
+            width: 100%; 
+        } 
+        input{ 
+            display: block; 
+            width: 250px; 
+            padding: 10px; 
+            margin: 3px 0; 
+            border-radius: 8px; 
+            font-size: 14px; 
+            font-family: inherit; 
+            box-sizing: border-box; 
+            appearance: none; 
+            -webkit-appearance: none; 
+            border: none; 
+            cursor: pointer; 
+            font-weight: bold; 
+            border: 1px solid #ccc; 
+        } 
+        input[type="number"]::-webkit-outer-spin-button, 
+        input[type="number"]::-webkit-inner-spin-button { 
+            -webkit-appearance: none; 
+            margin: 0; 
+        } 
+ 
+        input[type="number"] { 
+            -moz-appearance: textfield; 
+        } 
+        #hide_message{ 
+            position: fixed; 
+            display: flex; 
+            flex-direction: column; 
+            justify-content: center; 
+            text-align: center; 
+            top: 20px; 
+            left: 50%; 
+ 
+            color: #3E6842; 
+            width: 200px; 
+            height: 50px; 
+            border: none; 
+            border-radius: 15px; 
+ 
+            transform: translate(-50%, -100px); 
+            opacity: 0; 
+ 
+            transition: transform 0.5s ease, opacity 0.5s ease; 
+ 
+            z-index: 9999; 
+        } 
+        #message{ 
+            font-family: Inter,Helvetica,"Apple Color Emoji","Segoe UI Emoji",NotoColorEmoji,"Noto Color Emoji","Segoe UI Symbol","Android Emoji",EmojiSymbols,-apple-system,system-ui,"Segoe UI",Roboto,"Helvetica Neue","Noto Sans",sans-serif; 
+            font-size: 16px; 
+            justify-content: center; 
+            align-items: center; 
+        } 
+        footer { 
+            text-align: center; 
+            margin-top: auto; 
+            padding: 20px; 
+            margin-top: auto; 
+            font-size: 14px; 
+            color: #888; 
+            border-top: 1px solid #e0e0e0; 
+            font-family: Arial, sans-serif; 
+        } 
+        #form { 
             position: relative;
+            width: 100%;
+            height: 100%;
+            
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            min-height: 100vh;
-        }
-
-        .form p {
-            text-align: center;
-            margin-bottom: 20px;
-        }
-
-        .form input {
-            width: 250px;
-            margin-bottom: 15px;
-        }
-
-        .form button[type="submit"] {
-            width: 300px;
-        }
-
-        /* Kapatma butonu */
-        .close-btn {
+        } 
+ 
+        #form p { 
+            text-align: center; 
+            margin-bottom: 20px; 
+        } 
+ 
+        #form input { 
+            width: 250px; 
+            margin-bottom: 15px; 
+        } 
+ 
+        #form #submit { 
+            width: 300px; 
+        } 
+ 
+        /* Kapatma butonu */ 
+        .close-btn { 
             position: absolute;
+
             top: 20px;
             right: 20px;
 
             width: 35px;
             height: 35px;
 
+            padding: 0;
+            margin: 0;
+
             border: none;
             border-radius: 50%;
-            background: white;
-            color: #333;
+
+            background-color: white;
+            color: #d14141;
 
             font-size: 22px;
             cursor: pointer;
@@ -167,7 +178,9 @@
             display: flex;
             align-items: center;
             justify-content: center;
-        }
+
+            z-index: 10000;
+        } 
     </style>
 </head>
 <body>
@@ -175,7 +188,7 @@
     <button id="add">Add Task</button>
     <div id="hide">
         <form id="form" action="" method="POST">
-            <button class="close-btn" type="button">&times;</button>
+            <button class="close-btn" type="button" id="closeBtn">&times;</button>
             <p id="message"></p>
             <input type="" id="task" name="task">
             <button id="submit" type="submit">Submit</button>
@@ -192,11 +205,11 @@
                 <tr>
                     <td>{{task[0]}}</td>
                     <td>{{task[2]}}</td>
-                    <td style="background-color: {{ 'lightgreen' if task[3] else 'white' }};">
+                    <td style="background-color: {{ 'lightgreen' if task[3] else '#0d0d0d' }};">
                         <form method="POST" action="/toggle" onsubmit="return confirm('{{task[2]}} icin gorev ilerlemesini degistirmek istiyor musun?')">
                             <input type="hidden" name="id" value="{{task[0]}}">
                             <input type="hidden" name="progress" value="{{task[3]}}">
-                            <button type="submit" style="width:100%; height:100%; border:none; background:none; cursor:pointer; color:black; text-wrap:nowrap;">{{'Yapildi' if task[3] else 'Yapilmadi'}}</button>
+                            <button type="submit" style="width:100%; height:100%; border:none; background:none; cursor:pointer; color:{{'#0d0d0d' if task[3] else '#e0e0e0' }}; text-wrap:nowrap;">{{'Yapildi' if task[3] else 'Yapilmadi'}}</button>
                         </form>
                     </td>
                 </tr>
@@ -215,6 +228,7 @@
         const message = document.getElementById("hide_message");
         const form = document.getElementById("form");
         const form_message = document.getElementById("message");
+        const closeBtn = document.getElementById("closeBtn");
         var addButtonCount = 0;
         var delButtonCount = 0;
         
@@ -257,33 +271,27 @@
         addButton.addEventListener("click", function(){
             form.action = "/add";
             input_element.type = "text"
-            addButtonCount++;
-            if(addButtonCount % 2 == 1){
-                form_message.textContent = "Lutfen eklemek istediginiz gorevin adini yaziniz:"
-                div.style.display = "flex";
-                table.style.display = "none";
-                addButton.style.display = "none";
-            }else{
-                div.style.display = "none";
-                table.style.display = "block";
-                addButton.style.display = "block";
+            form_message.textContent = "Lutfen eklemek istediginiz gorevin adini yaziniz:"
+            div.style.display = "flex";
+            table.style.display = "none";
+            addButton.style.display = "none";
             }
-        });
-        
+        );
+
+        closeBtn.addEventListener("click", function(){
+            div.style.display = "none";
+            table.style.display = "table";
+            addButton.style.display = "block";
+            delButton.style.display = "block";
+        })
+
         delButton.addEventListener("click", function(){
             form.action = "/del";
             input_element.type = "number";
-            delButtonCount++;
-            if(delButtonCount % 2 == 1){
-                form_message.textContent = "Lutfen silmek istediginiz gorevin ID'sini giriniz:"
-                div.style.display = "flex";
-                table.style.display = "none";
-                addButton.style.display = "none";
-            }else{
-                div.style.display = "none";
-                table.style.display = "block";
-                addButton.style.display = "block";
-            }
+            form_message.textContent = "Lutfen silmek istediginiz gorevin ID'sini giriniz:"
+            div.style.display = "flex";
+            table.style.display = "none";
+            addButton.style.display = "none";
         });
 
         submit.addEventListener("click", function() {
@@ -313,4 +321,4 @@
     </script>
     <footer>© 2026 Salih Damar</footer>
 </body>
-</html>
+</html>>
