@@ -59,7 +59,7 @@ def render(veri):
     aciklama_en = veri["weather"][0]["description"]
     turkcesi = hava_durumu_tr.get(aciklama_en, aciklama_en)
 
-    return render_template("index.html",sehir_adi=veri["name"], sicaklik=veri["main"]["temp"],hava_durumu=turkcesi, image=image_address)
+    return render_template("index.html",sehir_adi=veri["name"], sicaklik=veri["main"]["temp"], hissedilen=veri["main"]["feels_like"],hava_durumu=turkcesi, image=image_address)
 
 folder = os.path.dirname(os.path.abspath(__file__))
 image_folder = os.path.join(folder, "/images")
@@ -99,14 +99,9 @@ def konum():
     lat = request.args.get("lat")
     lon = request.args.get("lon")
 
-    print("LAT: ", lat)
-    print("LON: " , lon)
-
     url = f"https://api.openweathermap.org/data/2.5/weather?lat={lat}&lon={lon}&appid={api_key}&units=metric"
     response = requests.get(url)
     veri = response.json()
-
-    print("VERI: ", veri)
 
     if veri.get("cod") != 200:
         return render_template("index.html", error="Lutfen gecerli bir sehir adi giriniz!")
